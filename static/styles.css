@@ -1,0 +1,51 @@
+body {
+    background-color: #6f0ae9;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+video {
+    max-width: 100%;
+    border: 1px solid #dee2e6;
+}
+
+.btn-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+.btn-primary:hover {
+    background-color: #5a339b;
+    border-color: #5a339b;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    padding: 20px 0; /* Отступы сверху и снизу */
+}
+
+footer img {
+    max-width: 100%; /* Ограничиваем ширину изображения */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+}
+
+.btn-custom {
+    background-color: #8A2BE2;
+    color: white;
+    border-radius: 30px;
+}
+
+.btn-custom:hover {
+    background-color: #6c23b6;
+}

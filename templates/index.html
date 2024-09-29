@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видео загрузчик</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    <style>
+        h1 {
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        video {
+            max-width: 100%;
+            border-radius: 3%;
+            height: auto;
+        }
+
+        .btn-primary {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+
+        .btn-primary:hover {
+            background-color: #5a339b;
+            border-color: #5a339b;
+        }
+
+        .card {
+            border: 1px solid #dee2e6;
+            border-radius: .25rem;
+            transition: transform .2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Статичный градиент с черным, зеленым и фиолетовым цветами */
+            background: linear-gradient(135deg, #001607, #800080);
+            background-size: cover;
+            position: relative;
+            /* Устанавливаем позиционирование */
+        }
+
+        header {
+            background-color: black;
+            text-align: center;
+            padding: 20px;
+            background-color: transparent;
+            position: relative;
+            top: 0;
+            z-index: 10;
+        }
+
+        header img {
+            max-width: 150px;
+        }
+
+        .frames-container {
+            margin-top: 100px;
+            /* Отступ для контента под фиксированным хедером */
+            flex: 1;
+            /* Позволяет контейнеру занимать оставшееся пространство */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-file-upload {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #0056b3;
+        }
+
+        .file-name {
+            display: block;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100"> <!-- Добавлено для вертикального центрирования -->
+    <header class=""> <!-- Добавлено mt-auto для отталкивания футера вниз -->
+        <img src="{{ url_for('static', filename='images/cp-logo.png') }}" alt="Logo" style="max-width: 300px;">
+        <img src="{{ url_for('static', filename='images/minrf.png') }}" alt="Logo" style="max-width: 300px;">
+        <img src="{{ url_for('static', filename='images/rsv.png') }}" alt="Logo" style="max-width: 150px;">
+    </header>
+    <div class="container mt-5 mb-auto"> <!-- Используем mb-auto для отступа сверху -->
+        <h1 class="text-center">Загрузить видео</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <!-- Скрытый стандартный инпут -->
+                <input type="file" id="videoInput" accept="video/*" class="form-control mb-3" style="display: none;">
+
+                <!-- Кастомная кнопка загрузки файла -->
+                <label for="videoInput" class="custom-file-upload btn btn-primary" id="videobtn">
+                    Выберите видео
+                </label>
+
+                <!-- Элемент для отображения имени файла -->
+                <span id="fileName" class="file-name text-white mt-2"></span>
+            </div>
+        </div>
+        <div id="videoContainer" class="text-center mt-4" style="display: none;">
+            <!-- Отображение загруженного видео -->
+            <video id="uploadedVideo" width="100%" controls>
+                <source id="videoSource" src="" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <!-- Кнопка отправки -->
+            <button id="submitButton" class="btn btn-primary mt-3">Обработать видео</button>
+            <button id="getInfoButton" class="btn btn-primary mt-3">Что на кадре?</button>
+            <button id="getInfoByContext" class="btn btn-primary mt-3">Поиск по контексту</button>
+        </div>
+        <div id="getInfoContainer" class="container mt-5" style="display: none;">
+            <div class="p-4 bg-primary rounded shadow-sm" style="color: white;" id="getInfoText">
+                <p id="getInfoText1"></p>
+                <p id="getInfoText2"></p>
+                <p id="getInfoText3"></p>
+                <p id="getInfoText4"></p>
+                <a href="" id="getInfoText5"></a>
+            </div>
+        </div>
+        <div id="getInfoByContextContainer" class="container mt-5" style="display: none;">
+            <div class="p-4 bg-primary rounded shadow-sm" style="color: white;" id="getInfoByContextBlock">
+                <div class="input-group">
+                    <input id="contextInput" type="text" class="form-control" placeholder="Введите текст для поиска...">
+                    <button class="btn btn-custom mt-2" id="getInfoByContextBtn">&#8594;</button>
+                </div>
+                <div id="resultDiv" style="color: white;">
+                </div>
+            </div>
+        </div>
+        <div id="framesContainer" class="text-center mt-4" style="display: none;">
+            <!-- Потоковое видео -->
+            <img id="videoStream" width="100%" src="" alt="Кадры не загружены">
+        </div>
+        <div id="durationContainer" class="text-center mt-4 d-flex flex-wrap justify-content-center"></div>
+        <div id="loadingContainer" class="text-center mt-4" style="display: none; color: white;">
+            <p>Подождите, пожалуйста...</p>
+            <img src="{{ url_for('static', filename='images/anim.gif') }}" alt="Loading...">
+        </div>        
+        <div id="downloadContainer" class="text-center mt-4" style="display: none;">
+            <!-- Здесь будет кнопка для скачивания транскрибации -->
+        </div>
+        <div id="analysisContainer" class="text-center mt-4" style="display: none;"></div>      
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
