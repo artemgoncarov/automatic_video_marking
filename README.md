@@ -70,6 +70,8 @@ wget https://huggingface.co/artemgoncarov/cp_vseross_2024/resolve/main/model-q2_
 wget https://huggingface.co/artemgoncarov/cp_vseross_2024/resolve/main/yolov8x.pt
 ```
 
+## Установите tesseract
+
 ## Virtual environment
 
 Мы предлагаем вам использовать Python версии 3.11.
