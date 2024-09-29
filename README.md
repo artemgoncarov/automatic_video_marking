@@ -2,10 +2,10 @@
 
 ## Решение команды [RASCAR] fsociety
 ### Состав и роли:
-Артём Гончаров - Team Lead, Frontend, NLP, CV.
-Андрей Алёхин - CV, NLP.
-Игорь Карташов - CV, NLP.
-Артём Гуйван - Audio, NLP.
+Артём Гончаров - Team Lead, Frontend, NLP, CV\
+Андрей Алёхин - CV, NLP\
+Игорь Карташов - CV, NLP\
+Артём Гуйван - Audio, NLP
 
 
 # Проблематика
