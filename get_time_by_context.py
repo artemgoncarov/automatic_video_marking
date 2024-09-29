@@ -47,7 +47,7 @@ def get_recs(new_description, descriptions, n_recs=1):
 def find_second_by_get_info_on_photo(video_path, promt, transcribitions, n_recomendations=1):
     cap = cv2.VideoCapture(video_path)
     frames = cap.get(cv2.CAP_PROP_FPS)
-    data = pd.read_csv(transcribitions)
+    data = pd.read_csv(transcribitions, sep='\t')
     cnt = 0
     descriptions_of_cadrs = []
     part_of_trans = 0

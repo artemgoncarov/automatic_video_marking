@@ -59,12 +59,7 @@ def get_second():
     video = request.args.get('video')
     text = request.args.get('text')
 
-    path_to_save = os.path.join(app.config['UPLOAD_FOLDER'], 'transcription.csv')
-
-    create_model()
-    get_text(video, path_to_save)
-    seconds = list(map(lambda x: str(x), (find_second_by_get_info_on_photo(video, text, path_to_save, 3))))
-    del_model()
+    seconds = list(map(lambda x: str(x), (find_second_by_get_info_on_photo(video, text, 'audio.tsv', 3))))
 
     print(seconds)
 
@@ -117,4 +112,4 @@ def detect_objects_route():
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=1488, debug=True)
