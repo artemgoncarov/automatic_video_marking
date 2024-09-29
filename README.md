@@ -151,3 +151,4 @@ python app.py
 # Рекомендуем к подписке на ТГ-каналы нашего сообщества
 
 https://t.me/rascar_ai
+https://t.me/i_am_artemid
