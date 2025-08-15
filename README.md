@@ -145,9 +145,3 @@ python app.py
 ## iteract.py
 
 Файл с функцией отправки запроса в LLM.
-
-# Рекомендуем к подписке на ТГ-каналы нашего сообщества
-
-https://t.me/rascar_ai \
-https://t.me/i_am_artemid \
-https://t.me/ml_with_artem
